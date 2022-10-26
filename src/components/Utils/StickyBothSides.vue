@@ -47,6 +47,9 @@ export default {
   },
   mounted() {
     this.windowWidth = window.innerWidth
+    if (this.windowWidth < this.maxWidth) {
+      this.disableSticky = true
+    }
     window.addEventListener('resize', this.onResize)
     this.getStartFixElementPosition()
     this.stickyElementWidth = this.shadowElement.offsetWidth

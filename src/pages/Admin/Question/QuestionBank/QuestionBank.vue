@@ -6,12 +6,14 @@
         <QuestionBankHeader />
       </div>
       <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 question-bank-filter">
-        <question-filter
-          ref="filter"
-          :filterQuestions="filterQuestions"
-          @onFilter="onFilter"
-          @delete-filter="deleteFilterItem"
-        />
+        <sticky-both-sides>
+          <question-filter
+            ref="filter"
+            :filterQuestions="filterQuestions"
+            @onFilter="onFilter"
+            @delete-filter="deleteFilterItem"
+          />
+        </sticky-both-sides>
       </div>
       <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12">
         <div class="question-bank-toolbar">
@@ -59,10 +61,11 @@ import QuestionItem from 'components/Question/QuestionItem/QuestionItem'
 import QuestionFilter from 'components/Question/QuestionBank/QuestionFilter'
 import QuestionToolBar from 'components/Question/QuestionBank/QuestionToolBar'
 import QuestionBankHeader from 'components/Question/QuestionBank/components/QuestionBankHeader'
+import stickyBothSides from 'components/Utils/StickyBothSides'
 
 export default {
   name: 'QuestionBank',
-  components: { QuestionBankHeader, QuestionToolBar, QuestionFilter, QuestionItem, pagination },
+  components: { stickyBothSides, QuestionBankHeader, QuestionToolBar, QuestionFilter, QuestionItem, pagination },
   data() {
     return {
       filterData: null,
@@ -108,9 +111,16 @@ export default {
     exam: {
       from: 'providedExam',
       default: new Exam()
+    },
+    scrollInfo: {
+      from: 'scrollInfo',
+      default: {}
     }
   },
   watch: {
+    scrollInfo(n) {
+      console.log('scrollInfooooooo', n)
+    },
     'selectedQuestions.length': {
       handler(newValue, oldValue) {
         this.exam.questions.list = []
